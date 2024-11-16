@@ -1,5 +1,5 @@
 <?php
-use App\Http\Controllers\ProdutoController;
+
 use App\Http\Controllers\PartidaController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\HomeController;
@@ -9,43 +9,50 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/ola', function () {
-//     echo "<h2>ola mundo</h2>";
-// });
-
 Route::get('/ola', [HomeController::class, 'index']);
 
-//PARTIDAS
-//READ
-Route::get('/partidas', [PartidaController::class, 'index'])->name('indexpartidas');
-Route::get('/partida/{codpartida}', [PartidaController::class,'show'])->name('showpartidas');
+// Rotas para PARTIDAS
+Route::controller(PartidaController::class)->group(function () {
+    Route::prefix('/partidas')->group(function () {
+        // READ
+        Route::get('/', 'index')->name('indexpartidas');
+        Route::get('/{codpartida}', 'show')->name('showpartidas');
+    });
 
-//create
-Route::get('/partida',[PartidaController::class,'create'])->name('criarpartidas');
-Route::post('/partida',[PartidaController::class,'store']);
+    Route::prefix('/partida')->group(function () {
+        // CREATE
+        Route::get('/', 'create')->name('criarpartidas');
+        Route::post('/', 'store');
 
-//update
-Route::get('/partida/{codpartida}/edit',[PartidaController::class,'edit'])->name('editpartidas');
-Route::post('/partida/{codpartida}/edit',[PartidaController::class,'update'])->name('updatepartidas');
+        // UPDATE
+        Route::get('/{codpartida}/edit', 'edit')->name('editpartidas');
+        Route::post('/{codpartida}/edit', 'update')->name('updatepartidas');
 
-//delete
-Route::get('/partida/{codpartida}/delete',[PartidaController::class,'delete'])->name('deletepartidas');
-Route::post('/partida/{codpartida}/remove',[PartidaController::class,'remove'])->name('removepartidas');
+        // DELETE
+        Route::get('/{codpartida}/delete', 'delete')->name('deletepartidas');
+        Route::post('/{codpartida}/remove', 'remove')->name('removepartidas');
+    });
+});
 
+// Rotas para DENÚNCIAS
+Route::controller(DenunciaController::class)->group(function () {
+    Route::prefix('/denuncias')->group(function () {
+        // READ
+        Route::get('/', 'index')->name('denuncia.index');
+        Route::get('/{id}', 'show')->name('denuncia.show');
+    });
 
-//DENUNCIAS
-//READ
-Route::get('/denuncias', [DenunciaController::class, 'index'])->name('denuncia.index');
-Route::get('/denuncia/{id}', [DenunciaController::class, 'show'])->name('denuncia.show');
+    Route::prefix('/denuncia')->group(function () {
+        // CREATE
+        Route::get('/', 'create')->name('denuncia.create');
+        Route::post('/', 'store')->name('denuncia.store');
 
-//CREATE
-Route::get('/denuncia', [DenunciaController::class, 'create'])->name('denuncia.create');
-Route::post('/denuncia', [DenunciaController::class, 'store'])->name('denuncia.store');
+        // UPDATE
+        Route::get('/{id}/edit', 'edit')->name('denuncia.edit');
+        Route::post('/{id}/edit', 'update')->name('denuncia.update');
 
-//UPDATE
-Route::get('/denuncia/{id}/edit', [DenunciaController::class, 'edit'])->name('denuncia.edit');
-Route::post('/denuncia/{id}/edit', [DenunciaController::class, 'update'])->name('denuncia.update');
-
-//DELETE
-Route::get('/denuncia/{id}/delete', [DenunciaController::class, 'delete'])->name('denuncia.delete');
-Route::post('/denuncia/{id}/remove', [DenunciaController::class, 'remove'])->name('denuncia.remove');
+        // DELETE
+        Route::get('/{id}/delete', 'delete')->name('denuncia.delete');
+        Route::post('/{id}/remove', 'remove')->name('denuncia.remove');
+    });
+});
