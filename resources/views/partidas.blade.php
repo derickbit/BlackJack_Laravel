@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Partidas</h1>
+    <h2><a href={{route('denuncia.index')}}>Denuncias</a></h2>
     @if ($partidas->count()>0)
     <table>
         <thead>
@@ -33,7 +34,6 @@
                 </td>
             </tr>
             @endforeach
-            {{-- <a href="{{route('criarpartidas')}}">Nova Partida</a> --}}
         </tbody>
     </table>
     @else

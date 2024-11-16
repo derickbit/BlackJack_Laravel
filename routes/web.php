@@ -15,23 +15,6 @@ Route::get('/', function () {
 
 Route::get('/ola', [HomeController::class, 'index']);
 
-//READ
-Route::get('/produtos', [ProdutoController::class, 'index'])->name('index');
-Route::get('/produto/{id}', [ProdutoController::class,'show'])->name('show');
-
-//create
-Route::get('/produto',[ProdutoController::class,'create'])->name('criar');
-Route::post('/produto',[ProdutoController::class,'store']);
-
-//update
-Route::get('/produto/{id}/edit',[ProdutoController::class,'edit'])->name('edit');
-Route::post('/produto/{id}/edit',[ProdutoController::class,'update'])->name('update');
-
-//delete
-Route::get('/produto/{id}/delete',[ProdutoController::class,'delete'])->name('delete');
-Route::post('/produto/{id}/remove',[ProdutoController::class,'remove'])->name('remove');
-
-
 //PARTIDAS
 //READ
 Route::get('/partidas', [PartidaController::class, 'index'])->name('indexpartidas');
