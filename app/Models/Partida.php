@@ -8,7 +8,5 @@ class Partida extends Model
 {
     protected $fillable = ['codpartida','Jogador1','Jogador2', 'Vencedor', 'pontuacao'];
 
-
-
-    //teste gutavo abu é corno
+    protected $primaryKey = 'codpartida';
 }

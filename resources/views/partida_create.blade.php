@@ -35,7 +35,7 @@
                 <td><input type="number" name="pontuacao"/></td>
             </tr>
             <tr align="center">
-                <td colspan="2"><input type="submit" value="criarpartidas"/></td>
+                <td colspan="2"><input type="submit" value="Registrar"/></td>
             </tr>
             <tr align="center">
                 <td colspan="2"><a href="/partidas" style="display: inline">&#9664;&nbsp;Voltar</a></td>

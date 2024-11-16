@@ -28,4 +28,33 @@ class PartidaController extends Controller
         else dd('Erro ao cadastrar partida');
     }
 
+    public function update(Request $request, $codpartida){
+        $updatedPartida = $request->all();
+        if(!Partida::find($codpartida)->update($updatedPartida))
+           dd("Erro ao atualizar partida $codpartida !");
+        return redirect ('/partidas');
+    }
+
+    public function edit($codpartida){
+
+        return view('partida_edit', [
+            'partida'=>Partida::find($codpartida)
+        ]);
+    }
+
+    public function delete($codpartida){
+
+        return view('partida_remove', [
+            'partida'=>Partida::find($codpartida)
+        ]);
+    }
+
+    public function remove (Request $request, $codpartida){
+        if($request->confirmar==="Deletar")
+            if(!Partida::destroy($codpartida))
+                 dd("Erro ao deletar produto $codpartida !");
+        return redirect('/partidas');
+
+    }
+
 }

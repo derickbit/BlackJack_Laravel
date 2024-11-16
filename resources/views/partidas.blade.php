@@ -20,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            <a href="{{route('criarpartidas')}}">Nova Partida</a>
+            <a href="{{route('criarpartidas')}}">Registrar Partida</a>
             @foreach($partidas as $partida)
             <tr>
                 <td> <a href="{{route('showpartidas',$partida->codpartida)}}">{{$partida->codpartida}}</td></a>
@@ -28,9 +28,9 @@
                 <td>{{$partida->Jogador2}}</td>
                 <td>{{$partida->Vencedor}}</td>
                 <td>{{($partida->pontuacao)}}</td>
-                {{-- <td><a href="{{route('editpartidas',$partida->id)}}">Editar</a>
-                    <a href="{{route('deletepartidas',$partida->id)}}">Excluir</a>
-                </td> --}}
+                <td><a href="{{route('editpartidas',$partida->codpartida)}}">Editar</a>
+                    <a href="{{route('deletepartidas',$partida->codpartida)}}">Excluir</a>
+                </td>
             </tr>
             @endforeach
             {{-- <a href="{{route('criarpartidas')}}">Nova Partida</a> --}}
