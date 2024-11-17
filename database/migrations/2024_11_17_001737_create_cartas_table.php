@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('cartas', function (Blueprint $table) {
             $table->id();
+            $table->integer('numero');
+            $table->String('naipe');
             $table->timestamps();
         });
     }

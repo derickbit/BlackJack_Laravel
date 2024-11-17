@@ -1,26 +1,21 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Models\Cartas;
+use App\Http\Controllers\Controller;
+use App\Models\Carta;
 use Illuminate\Http\Request;
+use App\Http\Resources\CartaResource;
+use App\Http\Resources\CartaCollection;
 
-class CartasController extends Controller
+class CartaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return new CartaCollection(Carta::all());
     }
 
     /**
@@ -34,23 +29,15 @@ class CartasController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cartas $cartas)
+    public function show(Carta $carta)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Cartas $cartas)
-    {
-        //
+        return new CartaResource($partida);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Cartas $cartas)
+    public function update(Request $request, Carta $carta)
     {
         //
     }
@@ -58,7 +45,7 @@ class CartasController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cartas $cartas)
+    public function destroy(Carta $carta)
     {
         //
     }
