@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PartidaController;
 use App\Http\Controllers\DenunciaController;
+use App\Http\Controllers\CartasController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,3 +57,5 @@ Route::controller(DenunciaController::class)->group(function () {
         Route::post('/{id}/remove', 'remove')->name('denuncia.remove');
     });
 });
+
+Route::resource('cartas', CartasController::class);
