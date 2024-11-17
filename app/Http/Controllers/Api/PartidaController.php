@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Controller;
 use App\Models\Partida;
 use Illuminate\Http\Request;
 use App\Http\Resources\PartidaResource;
 use App\Http\Resources\PartidaCollection;
+use App\Http\Resources\PartidaStoredResource;
+use App\Http\Resources\PartidaUpdatedResource;
+use App\Http\Requests\PartidaStoreRequest;
+use App\Http\Requests\PartidaUpdateRequest;
 
 class PartidaController extends Controller
 {
@@ -21,9 +25,13 @@ class PartidaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PartidaStoreRequest $request)
     {
-        //
+         try {
+            return new ProdutoStoredResource(Produto::create($request->validated()));
+        } catch (Exception $error) {
+            return $this->errorHandler("Erro ao registrar partida!", $error);
+        }
     }
 
     /**
@@ -37,9 +45,13 @@ class PartidaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Partida $partida)
-    {
-        //
+    public function update(PartidaUpdateRequest $request, Partida $partida){
+        try{
+            $partida->update($request->valedated());
+            return new PartidaUpdatedResource($partida);
+        }catch(Exception $error){
+            return $this->errorHandler("Erro ao atualizar partida!", $error);
+        }
     }
 
     /**
@@ -47,6 +59,11 @@ class PartidaController extends Controller
      */
     public function destroy(Partida $partida)
     {
-        //
+        try{
+            $partida->delete;
+            return (new PartidaResource($partida))->additional(["message"=>"Partida Removida!"]);
+        }catch (Exception $error){
+            return $this->errorHandler("Erro ao remover Partida", $error);
+        }
     }
 }
