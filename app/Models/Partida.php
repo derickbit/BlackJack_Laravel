@@ -9,4 +9,5 @@ class Partida extends Model
     protected $fillable = ['codpartida','Jogador1','Jogador2', 'Vencedor', 'pontuacao'];
 
     protected $primaryKey = 'codpartida';
+
 }

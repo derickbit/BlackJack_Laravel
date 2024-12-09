@@ -27,12 +27,16 @@ class PartidaController extends Controller
      */
     public function store(PartidaStoreRequest $request)
     {
-         try {
-            return new ProdutoStoredResource(Produto::create($request->validated()));
+        try {
+            // Valida os dados e cria a partida
+            $partida = Partida::create($request->validated());
+            return new PartidaStoredResource(Partida::create($request->validated()));
         } catch (Exception $error) {
             return $this->errorHandler("Erro ao registrar partida!", $error);
         }
     }
+
+
 
     /**
      * Display the specified resource.
@@ -42,17 +46,26 @@ class PartidaController extends Controller
         return new PartidaResource($partida);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(PartidaUpdateRequest $request, Partida $partida){
-        try{
-            $partida->update($request->valedated());
-            return new PartidaUpdatedResource($partida);
-        }catch(Exception $error){
-            return $this->errorHandler("Erro ao atualizar partida!", $error);
-        }
+   /**
+ * Update the specified resource in storage.
+ */
+public function update(PartidaUpdateRequest $request, Partida $partida)
+{
+    try {
+        $partida->update([
+            'Jogador1' => $request->input('jogador1'),
+            'Jogador2' => $request->input('jogador2'),
+            'Vencedor' => $request->input('vencedor'),
+            'pontuacao' => $request->input('pontuacao'),
+        ]);
+
+        return new PartidaUpdatedResource($partida);
+    } catch (\Exception $error) {
+        return $this->errorHandler("Erro ao atualizar a partida!", $error);
     }
+}
+
+
 
     /**
      * Remove the specified resource from storage.
@@ -60,7 +73,7 @@ class PartidaController extends Controller
     public function destroy(Partida $partida)
     {
         try{
-            $partida->delete;
+            $partida->delete();
             return (new PartidaResource($partida))->additional(["message"=>"Partida Removida!"]);
         }catch (Exception $error){
             return $this->errorHandler("Erro ao remover Partida", $error);

@@ -35,26 +35,26 @@ Route::get('/ola', [HomeController::class, 'index']);
 //     });
 // });
 
-// Rotas para DENÚNCIAS
-Route::controller(DenunciaController::class)->group(function () {
-    Route::prefix('/denuncias')->group(function () {
-        // READ
-        Route::get('/', 'index')->name('denuncia.index');
-        Route::get('/{id}', 'show')->name('denuncia.show');
-    });
+// // Rotas para DENÚNCIAS
+// Route::controller(DenunciaController::class)->group(function () {
+//     Route::prefix('/denuncias')->group(function () {
+//         // READ
+//         Route::get('/', 'index')->name('denuncia.index');
+//         Route::get('/{id}', 'show')->name('denuncia.show');
+//     });
 
-    Route::prefix('/denuncia')->group(function () {
-        // CREATE
-        Route::get('/', 'create')->name('denuncia.create');
-        Route::post('/', 'store')->name('denuncia.store');
+//     Route::prefix('/denuncia')->group(function () {
+//         // CREATE
+//         Route::get('/', 'create')->name('denuncia.create');
+//         Route::post('/', 'store')->name('denuncia.store');
 
-        // UPDATE
-        Route::get('/{id}/edit', 'edit')->name('denuncia.edit');
-        Route::post('/{id}/edit', 'update')->name('denuncia.update');
+//         // UPDATE
+//         Route::get('/{id}/edit', 'edit')->name('denuncia.edit');
+//         Route::post('/{id}/edit', 'update')->name('denuncia.update');
 
-        // DELETE
-        Route::get('/{id}/delete', 'delete')->name('denuncia.delete');
-        Route::post('/{id}/remove', 'remove')->name('denuncia.remove');
-    });
-});
+//         // DELETE
+//         Route::get('/{id}/delete', 'delete')->name('denuncia.delete');
+//         Route::post('/{id}/remove', 'remove')->name('denuncia.remove');
+//     });
+// });
 
