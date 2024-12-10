@@ -10,6 +10,12 @@ INSERT INTO `partidas` (`codpartida`,`Jogador1`, `Jogador2`,`Vencedor`, `pontuac
 (3,'JOSÉ','JOÃO','JOSÉ',1),
 (4,'MARIA','JOSÉ','JOSÉ',6);
 
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'João', 'joao@example.com', 'senha1', NOW(), NOW()),
+(2, 'Maria', 'maria@example.com', 'senha2', NOW(), NOW()),
+(3, 'José', 'jose@example.com', 'senha3', NOW(), NOW()),
+(4, 'Ana', 'ana@example.com', 'senha4', NOW(), NOW());
+
 INSERT INTO `cartas` (`numero`, `naipe`) VALUES
 (1, 'ouros'),
 (2, 'ouros'),
