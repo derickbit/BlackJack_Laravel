@@ -18,3 +18,4 @@ Route::apiResource('cartas', CartaController::class);
 Route::apiResource('denuncias', DenunciaController::class);
 
 Route::post('/partida' , [PartidaController::class, 'store']);
+Route::post('/denuncia' , [DenunciaController::class, 'store']);

@@ -30,11 +30,11 @@ class PartidaController extends Controller
     {
         try {
             // Valida os dados e cria a partida
-            // $partida = Partida::create($request->validated());
-            return (new PartidaStoredResource(Partida::create($request->validated()))
+             $partida = Partida::create($request->validated());
+            return (new PartidaStoredResource($partida))
             ->additional(['message'=> 'Partida registrada com Sucesso'])
             ->response()
-            ->setStatusCode(201, 'Partida criada'));
+            ->setStatusCode(201, 'Partida criada');
         } catch (Exception $error) {
             // Trate erros e retorne um status apropriado
             $this->errorHandler("Erro ao cadastrar partida",$error);

@@ -8,7 +8,6 @@ class Denuncia extends Model
 {
     protected $table = 'denuncia'; // Nome da tabela no banco
     protected $primaryKey = 'coddenuncia'; // Chave primária
-    public $timestamps = false; // Não usa created_at/updated_at
 
     protected $fillable = [
         'denunciante',
@@ -16,4 +15,5 @@ class Denuncia extends Model
         'descricao',
         'reg_date',
     ];
+
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PartidaStoreRequest extends FormRequest
+class DenunciaUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,10 @@ class PartidaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'jogador1' => 'required|string|max:255',
-            'jogador2' => 'required|string|max:255',
-            'vencedor' => 'required|string|max:255',
-            'pontuacao' => 'required|integer|min:0',
+            "denunciante" => "required|string|max:255",
+            "denunciado" => "required|string|max:255",
+            "descricao" => "required|string|max:255",
         ];
     }
+
 }

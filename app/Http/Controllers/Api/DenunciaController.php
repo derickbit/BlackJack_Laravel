@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\Controller;
 use App\Models\Denuncia;
 use Illuminate\Http\Request;
 use App\Http\Resources\DenunciaResource;
 use App\Http\Resources\DenunciaCollection;
+use App\Http\Resources\DenunciaStoredResource;
+use App\Http\Resources\DenunciaUpdatedResource;
+use App\Http\Requests\DenunciaStoreRequest;
+use App\Http\Requests\DenunciaUpdateRequest;
+use Exception;
 
 class DenunciaController extends Controller
 {
@@ -21,32 +26,60 @@ class DenunciaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DenunciaStoreRequest $request)
     {
-        //
-    }
+        try {
+            // Valida os dados e cria a Denuncia
+             $denuncia = Denuncia::create($request->validated());
+            return (new DenunciaStoredResource($denuncia))
+            ->additional(['message'=> 'Denuncia registrada com Sucesso'])
+            ->response()
+            ->setStatusCode(201, 'Denuncia criada');
+        } catch (Exception $error) {
+            // Trate erros e retorne um status apropriado
+            $this->errorHandler("Erro ao cadastrar denuncia",$error);
+    }}
+
+
 
     /**
      * Display the specified resource.
      */
-    public function show(Denuncia $denuncia)
+    public function show(Denuncia $Denuncia)
     {
-        return new DenunciaResource($partida);
+        return new DenunciaResource($Denuncia);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Denuncia $denuncia)
-    {
-        //
+   /**
+ * Update the specified resource in storage.
+ */
+public function update(DenunciaUpdateRequest $request, Denuncia $Denuncia)
+{
+    try {
+        $Denuncia->update([
+            'coddenunciante' => $request->input('coddenunciante'),
+            'coddenunciado' => $request->input('coddenunciado'),
+            'descricao' => $request->input('descricao'),
+        ]);
+
+        return new DenunciaUpdatedResource($Denuncia);
+    } catch (\Exception $error) {
+        return $this->errorHandler("Erro ao atualizar a Denuncia!", $error);
     }
+}
+
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Denuncia $denuncia)
+    public function destroy(Denuncia $Denuncia)
     {
-        //
+        try{
+            $Denuncia->delete();
+            return (new DenunciaResource($Denuncia))->additional(["message"=>"Denuncia Removida!"]);
+        }catch (Exception $error){
+            return $this->errorHandler("Erro ao remover Denuncia", $error);
+        }
     }
 }
