@@ -13,14 +13,7 @@ class PartidaStoredResource extends PartidaResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request): array
-    {
-        return $this->resource->toArray();
-    }
-
-
-
-
+ 
     public function withResponse(Request $request, JsonResponse $response): void
     {
         $response->setStatusCode(201, 'Partida Criada!');

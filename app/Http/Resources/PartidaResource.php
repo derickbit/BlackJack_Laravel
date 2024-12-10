@@ -13,17 +13,9 @@ class PartidaResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
-        return [
-            'codpartida' => $this->codpartida,
-            'jogador1' => $this->Jogador1,
-            'jogador2' => $this->Jogador2,
-            'vencedor' => $this->Vencedor,
-            'pontuacao' => $this->pontuacao,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-        ];
+        return parent :: toArray($request);
     }
 
 

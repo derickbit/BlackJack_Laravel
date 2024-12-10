@@ -11,6 +11,7 @@ use App\Http\Resources\PartidaStoredResource;
 use App\Http\Resources\PartidaUpdatedResource;
 use App\Http\Requests\PartidaStoreRequest;
 use App\Http\Requests\PartidaUpdateRequest;
+use Exception;
 
 class PartidaController extends Controller
 {
@@ -29,12 +30,15 @@ class PartidaController extends Controller
     {
         try {
             // Valida os dados e cria a partida
-            $partida = Partida::create($request->validated());
-            return new PartidaStoredResource(Partida::create($request->validated()));
+            // $partida = Partida::create($request->validated());
+            return (new PartidaStoredResource(Partida::create($request->validated()))
+            ->additional(['message'=> 'Partida registrada com Sucesso'])
+            ->response()
+            ->setStatusCode(201, 'Partida criada'));
         } catch (Exception $error) {
-            return $this->errorHandler("Erro ao registrar partida!", $error);
-        }
-    }
+            // Trate erros e retorne um status apropriado
+            $this->errorHandler("Erro ao cadastrar partida",$error);
+    }}
 
 
 
