@@ -17,4 +17,10 @@ class User extends Model
     public $timestamps = true; // Se a tabela possui os campos created_at e updated_at
 
     protected $fillable = ['name', 'email', 'password']; // Colunas que podem ser atribuídas em massa
+
+    protected $hidden = ['password','remember_token']; // Colunas que devem ser ocultadas
+
+    protected function casts() {
+        return [ 'email_verified_at' => 'datetime' , 'password' => 'hashed' ];
+    }
 }
