@@ -17,6 +17,7 @@ class ExceptionJsonResponse extends Exception
     {
         $previous = $this->getPrevious();
         $statusHttp = $this->getCode() ?? 500;
+
         $responseError = [
             'message' => $this->getMessage(),
         ];

@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 
 class DenunciaUpdatedResource extends DenunciaResource
 {
-   /**
+    /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
@@ -17,23 +17,29 @@ class DenunciaUpdatedResource extends DenunciaResource
     {
         return [
             'coddenuncia' => $this->coddenuncia,
-            'denunciante' => $this->denunciante,
-            'denunciado' => $this->denunciado,
+            'denunciante_id' => [
+                'id' => $this->denunciante_id,
+                'nome' => $this->denunciante_id->name ?? null, // Nome do denunciante
+            ],
+            'denunciado_id' => [
+                'id' => $this->denunciado_id,
+                'nome' => $this->denunciante_id->name ?? null, // Nome do denunciado
+            ],
             'descricao' => $this->descricao,
-            'reg_date' => $this->reg_date,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 
-
-
-
+    /**
+     * Modifica o código e a mensagem da resposta.
+     */
     public function withResponse(Request $request, JsonResponse $response): void
     {
         $response->setStatusCode(200, 'Denuncia Atualizada!');
     }
 
+    /**
+     * Adiciona metadados adicionais na resposta.
+     */
     public function with(Request $request): array
     {
         return [

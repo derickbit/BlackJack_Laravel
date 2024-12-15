@@ -22,9 +22,9 @@ class DenunciaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "denunciante" => "required|string|max:255",
-            "denunciado" => "required|string|max:255",
-            "descricao" => "required|string|max:255",
+            'denunciante_id' => 'required|integer|exists:users,id', // Verifica se o ID do denunciante existe na tabela users
+            'denunciado_id' => 'required|integer|exists:users,id',   // Verifica se o ID do denunciado existe na tabela users
+            'descricao' => 'required|string|max:255',
         ];
     }
 }

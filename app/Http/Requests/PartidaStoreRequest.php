@@ -22,9 +22,9 @@ class PartidaStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'Jogador1' => 'required|string|max:255',
-            'Jogador2' => 'required|string|max:255',
-            'Vencedor' => 'required|string|max:255',
+            'jogador1_id' => 'required|integer|exists:users,id',
+            'jogador2_id' => 'required|integer|exists:users,id',
+            'vencedor_id' => 'required|integer|exists:users,id',
             'pontuacao' => 'required|integer|min:0',
         ];
     }

@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
+
     protected $table = 'users'; // Confirme se o nome da tabela está correto
 
     protected $primaryKey = 'id'; // Chave primária da tabela
@@ -26,5 +27,30 @@ class User extends Authenticatable
 
     protected function casts() {
         return [ 'email_verified_at' => 'datetime' , 'password' => 'hashed' ];
+    }
+
+    public function partidasJogador1()
+    {
+        return $this->hasMany(Partida::class, 'jogador1_id');
+    }
+
+    public function partidasJogador2()
+    {
+        return $this->hasMany(Partida::class, 'jogador2_id');
+    }
+
+    public function partidasVencidas()
+    {
+        return $this->hasMany(Partida::class, 'vencedor_id');
+    }
+
+    public function denunciasFeitas()
+    {
+        return $this->hasMany(Denuncia::class, 'denunciante_id');
+    }
+
+    public function denunciasRecebidas()
+    {
+        return $this->hasMany(Denuncia::class, 'denunciado_id');
     }
 }

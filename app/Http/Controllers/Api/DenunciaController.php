@@ -57,8 +57,8 @@ public function update(DenunciaUpdateRequest $request, Denuncia $Denuncia)
 {
     try {
         $Denuncia->update([
-            'coddenunciante' => $request->input('coddenunciante'),
-            'coddenunciado' => $request->input('coddenunciado'),
+            'denunciante_id' => $request->input('denunciante_id'),
+            'denunciado_id' => $request->input('denunciado_id'),
             'descricao' => $request->input('descricao'),
         ]);
 

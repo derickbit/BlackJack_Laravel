@@ -57,9 +57,9 @@ public function update(PartidaUpdateRequest $request, Partida $partida)
 {
     try {
         $partida->update([
-            'Jogador1' => $request->input('jogador1'),
-            'Jogador2' => $request->input('jogador2'),
-            'Vencedor' => $request->input('vencedor'),
+            'jogador1_id' => $request->input('jogador1_id'),
+            'jogador2_id' => $request->input('jogador2_id'),
+            'vencedor_id' => $request->input('vencedor_id'),
             'pontuacao' => $request->input('pontuacao'),
         ]);
 
