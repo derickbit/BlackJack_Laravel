@@ -31,6 +31,15 @@ class DenunciaController extends Controller
         try {
             // Valida os dados e cria a Denuncia
              $denuncia = Denuncia::create($request->validated());
+
+                if($request->file('imagem')){
+                    $fileName = $request -> file('imagem')->hashName();
+                    if(!$request-> file('imagem')->store('denuncias','public')){
+                        throw new Exception('Imagem não foi salva');
+                    }
+                    $denuncia['imagem']=$fileName;
+                }
+
             return (new DenunciaStoredResource($denuncia))
             ->additional(['message'=> 'Denuncia registrada com Sucesso'])
             ->response()

@@ -25,6 +25,7 @@ class DenunciaStoreRequest extends FormRequest
             'denunciante_id' => 'required|integer|exists:users,id', // Verifica se o ID do denunciante existe na tabela users
             'denunciado_id' => 'required|integer|exists:users,id',   // Verifica se o ID do denunciado existe na tabela users
             'descricao' => 'required|string|max:255',
+            'imagem' => 'nullable|image',
         ];
     }
 }
