@@ -12,6 +12,7 @@ use App\Http\Resources\PartidaUpdatedResource;
 use App\Http\Requests\PartidaStoreRequest;
 use App\Http\Requests\PartidaUpdateRequest;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class PartidaController extends Controller
 {
@@ -40,7 +41,33 @@ class PartidaController extends Controller
             $this->errorHandler("Erro ao cadastrar partida",$error);
     }}
 
+    public function ranking()
+    {
+        try {
+            // Executa a query para calcular o ranking
+            $ranking = DB::table('users')
+                ->leftJoin('partidas', 'users.id', '=', 'partidas.vencedor_id')
+                ->select(
+                    'users.id',
+                    'users.name',
+                    DB::raw('COALESCE(SUM(partidas.pontuacao), 0) AS total_pontuacao')
+                )
+                ->groupBy('users.id', 'users.name')
+                ->orderBy('total_pontuacao', 'desc')
+                ->orderBy('users.name', 'asc')
+                ->get();
 
+            // Retorna o ranking como JSON
+            return response()->json($ranking, 200);
+        } catch (\Exception $e) {
+            // Loga o erro e retorna uma resposta de erro
+            \Log::error('Erro ao calcular o ranking: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Erro ao calcular o ranking',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     /**
      * Display the specified resource.

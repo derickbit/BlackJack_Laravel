@@ -29,25 +29,25 @@ class DenunciaController extends Controller
     public function store(DenunciaStoreRequest $request)
     {
         try {
-            // Valida os dados e cria a Denuncia
-             $denuncia = Denuncia::create($request->validated());
-
-                if($request->file('imagem')){
-                    $fileName = $request -> file('imagem')->hashName();
-                    if(!$request-> file('imagem')->store('denuncias','public')){
-                        throw new Exception('Imagem não foi salva');
-                    }
-                    $denuncia['imagem']=$fileName;
+            $denuncia = new Denuncia($request->validated());
+            $denuncia->denunciante_id = Auth::id(); // ID do usuário autenticado
+            if ($request->file('imagem')) {
+                $fileName = $request->file('imagem')->hashName();
+                if (!$request->file('imagem')->store('denuncias', 'public')) {
+                    throw new Exception('Imagem não foi salva');
                 }
+                $denuncia->imagem = $fileName;
+            }
+            $denuncia->save();
 
             return (new DenunciaStoredResource($denuncia))
-            ->additional(['message'=> 'Denuncia registrada com Sucesso'])
-            ->response()
-            ->setStatusCode(201, 'Denuncia criada');
+                ->additional(['message' => 'Denúncia registrada com sucesso'])
+                ->response()
+                ->setStatusCode(201, 'Denúncia criada');
         } catch (Exception $error) {
-            // Trate erros e retorne um status apropriado
-            $this->errorHandler("Erro ao cadastrar denuncia",$error);
-    }}
+            return $this->errorHandler("Erro ao cadastrar denúncia", $error);
+        }
+    }
 
 
 

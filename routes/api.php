@@ -12,6 +12,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::get('partidas/ranking', [PartidaController::class, 'ranking'])
+    ->name('partidas.ranking');
+
 Route::apiResource('partidas', PartidaController::class)
     ->middleware('auth:sanctum');
 
@@ -24,12 +27,18 @@ Route::apiResource('users', UserController::class)
 Route::apiResource('users', UserController::class)
 ->only(['index', 'show', 'store']);
 
+Route::get('/jogadores', [UserController::class, 'listarJogadores']);
+
 Route::apiResource('denuncias', DenunciaController::class)
 ->middleware('auth:sanctum');
 
 Route::apiResource('denuncias', DenunciaController::class)
 ->only(['index', 'show']);
 
+
+
+
+//Route::get('/ranking', [PartidaController::class, 'ranking']);
 // Route::post('/partida' , [PartidaController::class, 'store']);
 // Route::post('/denuncia' , [DenunciaController::class, 'store']);
 // Route::post('/user' , [UserController::class, 'store']);
