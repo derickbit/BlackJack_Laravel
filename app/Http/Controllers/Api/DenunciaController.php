@@ -30,7 +30,7 @@ class DenunciaController extends Controller
     {
         try {
             $denuncia = new Denuncia($request->validated());
-            $denuncia->denunciante_id = Auth::id(); // ID do usuário autenticado
+            $denuncia->denunciante_id; // ID do usuário autenticado
             if ($request->file('imagem')) {
                 $fileName = $request->file('imagem')->hashName();
                 if (!$request->file('imagem')->store('denuncias', 'public')) {
