@@ -15,6 +15,10 @@ Route::get('/user', function (Request $request) {
 Route::get('partidas/ranking', [PartidaController::class, 'ranking'])
     ->name('partidas.ranking');
 
+    Route::middleware('auth:sanctum')->post('/partidas/simular', [PartidaController::class, 'simularPartida']);
+
+    Route::middleware('auth:sanctum')->get('/partidas/user', [PartidaController::class, 'showByUser']);
+
 Route::apiResource('partidas', PartidaController::class)
     ->middleware('auth:sanctum');
 
@@ -28,6 +32,12 @@ Route::apiResource('users', UserController::class)
 ->only(['index', 'show', 'store']);
 
 Route::get('/jogadores', [UserController::class, 'listarJogadores']);
+
+Route::middleware('auth:sanctum')->get('/denuncias/user', [DenunciaController::class, 'showByUser']);
+
+
+
+
 
 Route::apiResource('denuncias', DenunciaController::class)
 ->middleware('auth:sanctum');

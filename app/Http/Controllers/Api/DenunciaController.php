@@ -49,7 +49,31 @@ class DenunciaController extends Controller
         }
     }
 
+    public function showByUser(Request $request)
+    {
+        try {
+            $userId = $request->user()->id; // Obtém o ID do usuário autenticado
 
+            // Busca as denúncias feitas pelo usuário autenticado
+            $denuncias = Denuncia::with('denunciado')->where('denunciante_id', $userId)->get();
+            // Retorna as denúncias em uma collection (se necessário)
+            return response()->json([
+                'success' => true,
+                'data' => $denuncias
+            ], 200);
+        } catch (Exception $error) {
+            return response()->json([
+                'success' => false,
+                'message' => "Erro ao buscar denúncias do usuário",
+                'error' => $error->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function denunciado()
+    {
+        return $this->belongsTo(Pessoa::class, 'denunciado_id', 'codpessoa');
+    }
 
     /**
      * Display the specified resource.
