@@ -29,18 +29,51 @@ class DenunciaController extends Controller
     public function store(DenunciaStoreRequest $request)
     {
         try {
-            // Valida os dados e cria a Denuncia
-             $denuncia = Denuncia::create($request->validated());
+            $denuncia = new Denuncia($request->validated());
+            $denuncia->denunciante_id; // ID do usuário autenticado
+            if ($request->file('imagem')) {
+                $fileName = $request->file('imagem')->hashName();
+                if (!$request->file('imagem')->store('denuncias', 'public')) {
+                    throw new Exception('Imagem não foi salva');
+                }
+                $denuncia->imagem = $fileName;
+            }
+            $denuncia->save();
+
             return (new DenunciaStoredResource($denuncia))
-            ->additional(['message'=> 'Denuncia registrada com Sucesso'])
-            ->response()
-            ->setStatusCode(201, 'Denuncia criada');
+                ->additional(['message' => 'Denúncia registrada com sucesso'])
+                ->response()
+                ->setStatusCode(201, 'Denúncia criada');
         } catch (Exception $error) {
-            // Trate erros e retorne um status apropriado
-            $this->errorHandler("Erro ao cadastrar denuncia",$error);
-    }}
+            return $this->errorHandler("Erro ao cadastrar denúncia", $error);
+        }
+    }
 
+    public function showByUser(Request $request)
+    {
+        try {
+            $userId = $request->user()->id; // Obtém o ID do usuário autenticado
 
+            // Busca as denúncias feitas pelo usuário autenticado
+            $denuncias = Denuncia::with('denunciado')->where('denunciante_id', $userId)->get();
+            // Retorna as denúncias em uma collection (se necessário)
+            return response()->json([
+                'success' => true,
+                'data' => $denuncias
+            ], 200);
+        } catch (Exception $error) {
+            return response()->json([
+                'success' => false,
+                'message' => "Erro ao buscar denúncias do usuário",
+                'error' => $error->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function denunciado()
+    {
+        return $this->belongsTo(Pessoa::class, 'denunciado_id', 'codpessoa');
+    }
 
     /**
      * Display the specified resource.
@@ -57,8 +90,8 @@ public function update(DenunciaUpdateRequest $request, Denuncia $Denuncia)
 {
     try {
         $Denuncia->update([
-            'coddenunciante' => $request->input('coddenunciante'),
-            'coddenunciado' => $request->input('coddenunciado'),
+            'denunciante_id' => $request->input('denunciante_id'),
+            'denunciado_id' => $request->input('denunciado_id'),
             'descricao' => $request->input('descricao'),
         ]);
 

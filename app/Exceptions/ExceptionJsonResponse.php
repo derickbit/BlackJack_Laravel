@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
+
 
 class ExceptionJsonResponse extends Exception
 {
@@ -15,6 +17,7 @@ class ExceptionJsonResponse extends Exception
     {
         $previous = $this->getPrevious();
         $statusHttp = $this->getCode() ?? 500;
+
         $responseError = [
             'message' => $this->getMessage(),
         ];

@@ -17,12 +17,20 @@ class PartidaUpdatedResource extends PartidaResource
     {
         return [
             'codpartida' => $this->codpartida,
-            'jogador1' => $this->Jogador1,
-            'jogador2' => $this->Jogador2,
-            'vencedor' => $this->Vencedor,
+            'jogador1_id' => [
+                'id' => $this->jogador1_id,
+                'nome' => $this->jogador1->name ?? null, // Nome do jogador 1
+            ],
+            'jogador2_id' => [
+                'id' => $this->jogador2_id,
+                'nome' => $this->jogador2->name ?? null, // Nome do jogador 2
+            ],
+            'vencedor_id' => [
+                'id' => $this->vencedor_id,
+                'nome' => $this->vencedor->name ?? null, // Nome do Vencedor
+            ],
             'pontuacao' => $this->pontuacao,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+
         ];
     }
 

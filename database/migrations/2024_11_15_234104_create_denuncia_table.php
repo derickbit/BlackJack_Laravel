@@ -13,12 +13,14 @@ return new class extends Migration
 {
     Schema::create('denuncia', function (Blueprint $table) {
         $table->id('coddenuncia');
-        $table->String('denunciante');
-        $table->String('denunciado');
+        $table->foreignId('denunciante_id')->constrained('users')->onDelete('cascade');
+        $table->foreignId('denunciado_id')->constrained('users')->onDelete('cascade');
         $table->text('descricao');
+        $table->text('imagem')->nullable();
         $table->date('reg_date')->default(DB::raw('CURRENT_DATE'));
         $table->timestamps();
     });
+
 }
 
 

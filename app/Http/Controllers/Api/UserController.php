@@ -68,6 +68,10 @@ public function update(UserUpdateRequest $request, User $user)
     }
 }
 
+public function listarJogadores()
+{
+    return response()->json(User::select('id', 'name')->get());
+}
 
 
     /**
